@@ -39,9 +39,12 @@ for i, PIN in enumerate(df["PIN"]):
     r = requests.get("https://zimas.lacity.org/map.aspx?pin=" + PIN + "&ajax=yes")
     text_data = r.text
 
-    lot_parcel_areas.append(
-        float(re.search(lot_parcel_area_regex, text_data).group(1).replace(",", ""))
-    )
+    try:
+        lot_parcel_areas.append(
+            float(re.search(lot_parcel_area_regex, text_data).group(1).replace(",", ""))
+        )
+    except:
+        lot_parcel_areas.append("None")
     try:
         community_plan_areas.append(
             re.search(community_plan_area_regex, text_data).group(1)
