@@ -1,12 +1,2 @@
-,0
-0,3150.0
-1,Hollywood
-2,Central
-3,Hollywood United
-4,CD 13 - Hugo Soto-Martinez
-5,105471.0
-6,122508.0
-7,04/12/2022
-8,9.0
-9,1931
-10,3763.0
+,lot_parcel_area,community_plan_area,area_planning_commission,neighborhood_council,council_district,assessed_land_value,assessed_improvement_values,last_owner_change,last_sale_amount,year_built,building_square_footage
+0,3150.0,Hollywood,Central,Hollywood United,CD 13 - Hugo Soto-Martinez,105471.0,122508.0,04/12/2022,9.0,1931,3763.0

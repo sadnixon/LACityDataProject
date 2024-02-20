@@ -1,6 +1,8 @@
 import pandas as pd
+import numpy as np
 import requests
 import re
+import time
 
 lot_parcel_area_regex = 'Lot/Parcel Area \(Calculated\)&nbsp;</a\\\\></td\\\\><td class=\\\\"DataCellsRight\\\\" \\\\>([0123456789,.]+) \(sq ft\)'
 
@@ -35,7 +37,22 @@ last_sale_amounts = []
 years_built = []
 building_square_footages = []
 
+new_column_names = [
+    "lot_parcel_area",
+    "community_plan_area",
+    "area_planning_commission",
+    "neighborhood_council",
+    "council_district",
+    "assessed_land_value",
+    "assessed_improvement_values",
+    "last_owner_change",
+    "last_sale_amount",
+    "year_built",
+    "building_square_footage",
+]
+
 for i, PIN in enumerate(df["PIN"]):
+    start_time = time.time()
     r = requests.get("https://zimas.lacity.org/map.aspx?pin=" + PIN + "&ajax=yes")
     text_data = r.text
 
@@ -135,8 +152,12 @@ for i, PIN in enumerate(df["PIN"]):
             years_built,
             building_square_footages,
         ]
-        so_far = pd.DataFrame(compiled_list)
+        transposed_list = np.array(compiled_list).T.tolist()
+        so_far = pd.DataFrame(transposed_list, columns=new_column_names)
         so_far.to_csv("so_far.csv")
+    end_time = time.time()
+    if end_time - start_time < 1:
+        time.sleep(1 - (end_time - start_time))
 
 df["lot_parcel_area"] = lot_parcel_areas
 df["community_plan_area"] = community_plan_areas
